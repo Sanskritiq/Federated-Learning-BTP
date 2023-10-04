@@ -1,0 +1,25 @@
+metadata:
+  n_clients: 10
+  cuda: False
+  global_epochs: 30
+  model: 'classic_cnn'  # 'classic_cnn' or 'cnn'
+
+data:
+  name: 'mnist'         # 'mnist' or 'cifar10'
+  root_path: 'data/'
+  n_classes: 10
+
+client:
+  data_distribution: 'iid'  # 'iid' or 'non-iid' or 'unequal'
+  least_data: 50 # least number of data to be distributed to each client randomly
+  train_batch_size: 32
+  test_batch_size: 16
+  num_workers: 4
+  lr: 0.001
+  epochs: 10
+
+global:
+  batch_size: 64 
+  num_workers: 4
+  random_select_ratio: 0.33 # 0.33 means 1/3 clients are selected randomly in each round
+  lr: 0.005
