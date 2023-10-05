@@ -72,6 +72,29 @@ def unequal(indexes, n):
         start = end
 
     return parts
+
+def unequal_non_iid(indexes, n, targets):
+    index_label_pairs = [(index, target) for index, target in zip(indexes, targets)]
+    index_label_pairs_least = index_label_pairs[:client_least_data*n_clients]
+    index_label_pairs = index_label_pairs[client_least_data*n_clients:]
+    index_label_pairs.sort(key=lambda x: x[1])
+    least_indexes = [index for index, _ in index_label_pairs_least]
+    parts = iid(least_indexes, n)
+    
+    part_size = len(indexes) // n
+    remainder = len(indexes) % n
+
+    start = 0
+    end = 0
+    
+    for i in range(n):
+        part_size = random.randint(1, len(indexes) // (n - i))
+        end += part_size + (1 if i < remainder else 0)
+        part = [index for index, _ in index_label_pairs[start:end]]
+        parts[i] += part
+        start = end
+
+    return parts
     
 
 def ClientPreprocessTrain():
@@ -88,6 +111,8 @@ def ClientPreprocessTrain():
         train_samplers = unequal([i for i in range(len(train.targets))], n_clients)
     elif client_data_distribution_type == 'non-iid':
         train_samplers = non_iid([i for i in range(len(train.targets))], n_clients, train.targets)
+    elif client_data_distribution_type == 'unequal-non-iid':
+        train_samplers = unequal_non_iid([i for i in range(len(train.targets))], n_clients, train.targets)
     else:
         train_samplers = iid([i for i in range(len(train.targets))], n_clients)
     
