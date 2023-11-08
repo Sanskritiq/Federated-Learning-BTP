@@ -26,19 +26,30 @@ class Distribution:
         plt.show()
         
     def get_sampler(self, dataset: Dataset):
+        self.generate_dirichlet_distribution()
         # Generate a dictionary of sample indexes for each client based on the Dirichlet distribution
-        for client_id in self.data_distribution:
-            num_samples = len(dataset)
-            samples_per_class = [int(self.data_distribution[client_id][i] * num_samples) for i in range(self.num_classes)]
-            client_sampler = []
-            for class_idx, num_samples in enumerate(samples_per_class):
-                class_samples = np.random.choice(np.where(dataset.targets == class_idx)[0], num_samples, replace=False)
-                client_sampler.extend(class_samples)
-            client_samplers[client_id] = client_sampler
         
-        return client_samplers
+        num_samples_per_class = np.unique(dataset.targets, return_counts=True)[1]
+        indexes_per_label = [np.where(dataset.targets == i)[0] for i in range(num_classes)]
+        
+        for client_id in self.data_distribution:
+            samples_per_class = [int(self.data_distribution[client_id][i] * num_samples_per_class[i]) for i in range(num_classes)]
+            client_sampler = []
+            for i, num_samples in enumerate(samples_per_class):
+                class_samples = np.random.choice(indexes_per_label[i], samples_per_class[i], replace=False)
+                client_sampler.extend(class_samples)
+            self.client_samplers[client_id] = client_sampler
 
 if __name__=="__main__":
+    from torchvision.datasets import MNIST, CIFAR10
+    from torchvision import transforms
     d = Distribution()
     d.generate_dirichlet_distribution()
+    # d.plot_distribution()
+    train = MNIST(root=dataset_path, train=True, transform=transforms.ToTensor(), download=True)
+    print(train)
+    d.get_sampler(train)
+    print(len(d.client_samplers[0]), len(d.client_samplers[1]))
     d.plot_distribution()
+    # print(len(d.client_samplers[0][0]), len(d.client_samplers[1][0]))
+    
