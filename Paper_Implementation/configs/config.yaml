@@ -1,0 +1,11 @@
+dirichlet:
+  alpha: 0.5  # alpha for dirichlet distribution
+
+client:
+  num_clients: 30  # number of clients
+
+dataset:
+  name: 'mnist'  # name of datasetname
+  path: 'dataset/'  # path to dataset
+  num_classes: 10  # number of classes in dataset
+  batch_size: 64  # batch size
