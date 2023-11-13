@@ -2,15 +2,15 @@ metadata:
   n_clients: 10
   cuda: False
   global_epochs: 30
-  model: 'cnn'  # 'classic_cnn' or 'cnn'
+  model: 'classic_cnn'  # 'classic_cnn' or 'cnn'
 
 data:
-  name: 'cifar10'         # 'mnist' or 'cifar10'
+  name: 'mnist'         # 'mnist' or 'cifar10'
   root_path: 'data/'
   n_classes: 10
 
 client:
-  data_distribution: 'unequal-non-iid'  # 'iid' or 'non-iid' or 'unequal' or 'unequal-non-iid'
+  data_distribution: 'iid'  # 'iid' or 'non-iid' or 'unequal' or 'unequal-non-iid'
   least_data: 50 # least number of data to be distributed to each client randomly
   train_batch_size: 32
   test_batch_size: 16
