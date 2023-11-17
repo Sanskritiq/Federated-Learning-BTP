@@ -15,12 +15,15 @@ from data.dataLoader import ClientPreprocessTrain
 from functions.serialization import Serialization
 
 class GlobalTrainer:
-    def __init__(self, global_model: nn.Module) -> None:
+    def __init__(self, global_model: nn.Module, fed_learn_method = 'fedavgM') -> None:
         self.global_model = global_model
         self.epochs = global_epochs
         self.client_ids = [i for i in range(n_clients)]
         self.trainset = ClientPreprocessTrain()
         self.client_trainer_set = {}
+        self.fed_learn_method = fed_learn_method
+        agg_dict = {'fedavg': fedratedLearning.aggregate, 'fedavgM': fedratedLearning.aggregate_with_momentum}
+        self.aggregator = agg_dict[self.fed_learn_method]
         for client_id in self.client_ids:
             self.client_trainer_set[client_id] = ClientTrainer(client_id, global_model, self.trainset[client_id])
             
@@ -34,7 +37,9 @@ class GlobalTrainer:
                 w, p = self.client_trainer_set[client_id].get_weight_param()
                 weights.append(w)
                 params.append(p)
-            self.serialized_params = fedratedLearning.aggregate(params, weights)
+            global_params = torch.cat([param.data.clone().view(-1) for param in self.global_model.parameters()])
+
+            self.serialized_params = self.aggregator(params, weights, global_params)
             Serialization.deserialize(self.global_model, self.serialized_params)
 
         
