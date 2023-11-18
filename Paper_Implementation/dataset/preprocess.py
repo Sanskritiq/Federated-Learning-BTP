@@ -7,7 +7,7 @@ from configs.conf_loader import *
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from torchvision.datasets import MNIST, CIFAR10
-from distribution import *
+from dataset.distribution import *
 
 class Preprocess:
     def __init__(self, name = 'mnist', dist = 'iid'):

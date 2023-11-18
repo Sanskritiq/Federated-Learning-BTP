@@ -12,7 +12,7 @@ sys.path.append(sys_path)
 from configs.conf_loader import *
 from functions.serialization import Serialization
 
-# TODO: Integrate it with current structure of the code
+
 class ClientTrainer:
     def __init__(self, client_id, global_model:nn.Module, train_loader:DataLoader) -> None:
         self.client_id = client_id
@@ -55,11 +55,20 @@ class ClientTrainer:
         return weights, params
     
 if __name__=='__main__':
-    from models.models import ClassicCNN
-    from data.dataLoader import ClientPreprocessTrain
-    model = ClassicCNN()
-    trainset = ClientPreprocessTrain()
+    from models.models import CNN_MNIST
+    from dataset.preprocess import Preprocess
+    model = CNN_MNIST()
+    pre = Preprocess()
+    pre.client_preprocess_train()
+    trainset = pre.client_train_sets
     trainer = ClientTrainer(0, model, trainset[0])
+    trainer.train()
+    w, p = trainer.get_weight_param()
+    print(w)
+    print(p)
+    pre.client_preprocess_test()
+    testset = pre.client_test_sets
+    trainer = ClientTrainer(0, model, testset[0])
     trainer.train()
     w, p = trainer.get_weight_param()
     print(w)

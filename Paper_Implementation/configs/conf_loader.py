@@ -22,6 +22,7 @@ dataset_distribution = conf['dataset']['distribution']
 
 num_clients = conf['client']['num_clients']
 client_epochs = conf['client']['epochs']
+client_lr = conf['client']['lr']
 client_ids = range(num_clients)
 
 global_rounds = conf['global']['rounds']

@@ -4,6 +4,7 @@ dirichlet:
 client:
   num_clients: 30  # number of clients
   epochs: 5  # number of epochs
+  lr: 0.01  # learning rate
 
 global:
   rounds: 100  # number of rounds
