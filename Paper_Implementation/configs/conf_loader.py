@@ -26,6 +26,7 @@ client_lr = conf['client']['lr']
 client_ids = range(num_clients)
 
 global_rounds = conf['global']['rounds']
+random_select_ratio = conf['global']['random_select_ratio']
 
 momentum = conf['train']['momentum']
 model_name = conf['train']['model_name']
