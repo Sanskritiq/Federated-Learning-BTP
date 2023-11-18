@@ -1,8 +1,13 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from configs.conf_loader import *
+
 import torch
 import torch.nn as nn
 
 class MNIST_MLP(nn.Module):
-    def __init__(self, input_size, hidden_size, num_classes):
+    def __init__(self, input_size=28*28, hidden_size=200, num_classes=10):
         super(MNIST_MLP, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_size)
         self.relu1 = nn.ReLU()
@@ -54,18 +59,30 @@ class CNN_MNIST(nn.Module):
         x = self.fc2(x)
         x = self.softmax(x)
         return x
+
+model_dict = {
+    'mnist-mlp': MNIST_MLP,
+    'cnn-mnist': CNN_MNIST
+}
+model = model_dict[model_name]()
     
     
 if __name__=="__main__":
     # Define the model
-    input_size = 28 * 28  # MNIST images are 28x28 pixels
-    hidden_size = 200
-    num_classes = 10  # MNIST has 10 classes (digits 0-9)
+    # input_size = 28 * 28  # MNIST images are 28x28 pixels
+    # hidden_size = 200
+    # num_classes = 10  # MNIST has 10 classes (digits 0-9)
 
-    model = MNIST_MLP(input_size, hidden_size, num_classes)
+    # model = MNIST_MLP(input_size, hidden_size, num_classes)
 
-    # You can print the model to see the architecture
-    print(model)
+    # # You can print the model to see the architecture
+    # print(model)
+    from torchvision.datasets import MNIST
+    from torch.utils.data import transforms
+    train = MNIST(dataset_path, train=True, transform=transforms.ToTensor(), download=True)
+    train = DataLoader(train, batch_size=16, shuffle=True)
+    # test = torch.rand((1, 1, 28, 28))
     
     model = CNN_MNIST()
+    out = model(train)
     print(model)    

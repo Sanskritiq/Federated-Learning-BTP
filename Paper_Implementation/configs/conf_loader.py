@@ -18,6 +18,13 @@ num_classes = conf['dataset']['num_classes']
 dataset_name = conf['dataset']['name']
 dataset_path = conf['dataset']['path']
 batch_size = conf['dataset']['batch_size']
+dataset_distribution = conf['dataset']['distribution']
 
 num_clients = conf['client']['num_clients']
+client_epochs = conf['client']['epochs']
 client_ids = range(num_clients)
+
+global_rounds = conf['global']['rounds']
+
+momentum = conf['train']['momentum']
+model_name = conf['train']['model_name']
