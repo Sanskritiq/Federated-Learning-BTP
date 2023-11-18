@@ -24,6 +24,7 @@ class GlobalTrainer:
         self.fed_learn_method = fed_learn_method
         agg_dict = {'fedavg': fedratedLearning.aggregate, 'fedavgM': fedratedLearning.aggregate_with_momentum}
         self.aggregator = agg_dict[self.fed_learn_method]
+        self.velocity = torch.zeros(1)
         for client_id in self.client_ids:
             self.client_trainer_set[client_id] = ClientTrainer(client_id, global_model, self.trainset[client_id])
             
@@ -38,8 +39,8 @@ class GlobalTrainer:
                 weights.append(w)
                 params.append(p)
             global_params = torch.cat([param.data.clone().view(-1) for param in self.global_model.parameters()])
-
-            self.serialized_params = self.aggregator(params, weights, global_params)
+            self.serialized_params, self.velocity = self.aggregator(params, weights, global_params, self.velocity)
+            print(self.velocity)
             Serialization.deserialize(self.global_model, self.serialized_params)
 
         

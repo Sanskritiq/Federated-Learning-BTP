@@ -1,7 +1,7 @@
 metadata:
   n_clients: 10
   cuda: False
-  global_epochs: 30
+  global_epochs: 200
   model: 'cnn'  # 'classic_cnn' or 'cnn'
 
 data:
@@ -10,12 +10,12 @@ data:
   n_classes: 10
 
 client:
-  data_distribution: 'non-iid'  # 'iid' or 'non-iid' or 'unequal' or 'unequal-non-iid'
+  data_distribution: 'iid'  # 'iid' or 'non-iid' or 'unequal' or 'unequal-non-iid'
   least_data: 50 # least number of data to be distributed to each client randomly
   train_batch_size: 32
   test_batch_size: 16
   num_workers: 4
-  lr: 0.001
+  lr: 0.05
   epochs: 10
 
 global:
