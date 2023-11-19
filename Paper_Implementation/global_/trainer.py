@@ -16,13 +16,10 @@ from dataset.preprocess import Preprocess
 from functions.serialization import Serialization
 
 class GlobalTrainer:
-    def __init__(self, global_model: nn.Module, fed_learn_method = 'fedavgM') -> None:
+    def __init__(self, global_model: nn.Module, trainset, fed_learn_method = 'fedavgM') -> None:
         self.global_model = global_model
         self.epochs = global_rounds
-        # self.client_ids = [i for i in range(n_clients)]
-        pre = Preprocess()
-        pre.client_preprocess_train()
-        self.trainset = pre.client_train_sets
+        self.trainset = trainset
         self.client_trainer_set = {}
         self.fed_learn_method = fed_learn_method
         agg_dict = {'fedavg': fedratedLearning.aggregate, 'fedavgM': fedratedLearning.aggregate_with_momentum}
@@ -50,7 +47,9 @@ class GlobalTrainer:
 if __name__ == '__main__':
     from models.models import CNN_MNIST
     model = CNN_MNIST()
-    trainer = GlobalTrainer(model)
+    pre = Preprocess()
+    pre.client_preprocess_train()
+    trainer = GlobalTrainer(model, pre.client_train_sets)
     trainer.train()
 
         

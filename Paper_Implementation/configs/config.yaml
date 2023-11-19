@@ -3,19 +3,21 @@ dirichlet:
 
 client:
   num_clients: 30  # number of clients
-  epochs: 5  # number of epochs
+  epochs: 20  # number of epochs
   lr: 0.01  # learning rate
 
 global:
   rounds: 100  # number of rounds
+  random_select_ratio: 0.33 # ratio of random selection from the number of clients
 
 dataset:
   distribution: 'dirichlet'  # 'iid' or 'dirichlet'
   name: 'mnist'  # 'mnist' or 'cifar10'
   path: 'dataset/'  # path to dataset
   num_classes: 10  # number of classes in dataset
-  batch_size: 64  # batch size
+  batch_size: 32  # batch size
 
 train:
   momentum: 0.9  # momentum for aggregation
+  aggregator_method: 'fedavg' # 'fedavg' or 'fedavgM'
   model_name: 'cnn-mnist'  # 'mnist-mlp' or 'cnn-mnist'

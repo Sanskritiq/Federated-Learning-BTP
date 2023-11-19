@@ -30,3 +30,4 @@ random_select_ratio = conf['global']['random_select_ratio']
 
 momentum = conf['train']['momentum']
 model_name = conf['train']['model_name']
+aggregator_method = conf['train']['aggregator_method']
