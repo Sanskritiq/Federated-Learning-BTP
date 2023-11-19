@@ -11,15 +11,11 @@ class fedratedLearning:
         pass
     
     @staticmethod
-    def aggregate(serialized_params_list, weights = None, global_params = None, velocity = None) -> torch.Tensor:
-        if weights is None:
-            weights = torch.ones(len(serialized_params_list))
-        else:
-            weights = torch.tensor(weights)
-
-        weights = weights / torch.sum(weights)
-        serialized_params = torch.sum(torch.stack(serialized_params_list, dim=-1)*weights, dim=-1)        
-        return serialized_params
+    def aggregate(global_params, weighted_deltaw_list, momentum = None, velocity = None) -> torch.Tensor:
+        
+        weighted_deltaw = torch.sum(torch.stack(weighted_deltaw_list, dim=-1), dim=-1)    
+        global_params += weighted_deltaw    
+        return global_params, 0
 
     @staticmethod
     def aggregate_with_momentum(serialized_params_list, weights = None, global_params = None, momentum = 0.9) -> torch.Tensor:

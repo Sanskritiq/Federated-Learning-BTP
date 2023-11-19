@@ -28,18 +28,20 @@ class GlobalTrainer:
         for client_id in client_ids:
             self.client_trainer_set[client_id] = ClientTrainer(client_id, global_model, self.trainset[client_id])
             
-    def train(self, momentum = 0.9):        
+    def train(self, momentum = 0.9, velocity = 0):        
         for _ in trange(self.epochs, desc="global_training_epoch"):
             rand_client_ids = random.sample(client_ids, k=int(num_clients*random_select_ratio))
-            weights, params = [], []
+            total_samples = sum(len(self.client_trainer_set[i].train_loader.dataset) for i in rand_client_ids)
+            weighted_params = []
             for client_id in rand_client_ids:
                 serialized_global_params = Serialization.serialize(self.global_model)
                 self.client_trainer_set[client_id].train(serialized_global_params)
                 w, p = self.client_trainer_set[client_id].get_weight_param()
-                weights.append(w)
-                params.append(p)
-            global_params = torch.cat([param.data.clone().view(-1) for param in self.global_model.parameters()])
-            self.serialized_params = self.aggregator(params, weights, global_params, momentum)
+                w = w/total_samples
+                w = torch.tensor(w)
+                weighted_params.append((p-serialized_global_params)*w)
+            # global_params = torch.cat([param.data.clone().view(-1) for param in self.global_model.parameters()])
+            self.serialized_params = self.aggregator(serialized_global_params, weighted_params, momentum, velocity)[0]
             # print(self.velocity)
             Serialization.deserialize(self.global_model, self.serialized_params)
             
