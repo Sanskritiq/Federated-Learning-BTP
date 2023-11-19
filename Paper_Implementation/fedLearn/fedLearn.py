@@ -15,14 +15,15 @@ class fedratedLearning:
         
         weighted_deltaw = torch.sum(torch.stack(weighted_deltaw_list, dim=-1), dim=-1)    
         global_params += weighted_deltaw    
-        return global_params, 0
+        return global_params, None
 
     @staticmethod
-    def aggregate_with_momentum(serialized_params_list, weights = None, global_params = None, momentum = 0.9) -> torch.Tensor:
-        for global_param, client_params in zip(global_params, zip(*serialized_params_list)):
-            global_param.data = (1 - momentum) * global_param.data + momentum * sum(client_param.data / len(serialized_params_list) for client_param in client_params)
-
-        return global_params
+    def aggregate_with_momentum(global_params, weighted_deltaw_list, momentum = 0.9, velocity = 0) -> torch.Tensor:
+        weighted_deltaw = torch.sum(torch.stack(weighted_deltaw_list, dim=-1), dim=-1)  
+        velocity = momentum*velocity + weighted_deltaw
+        global_params += velocity
+        
+        return global_params, velocity
             
 if __name__ == '__main__':
     from models.models import CNN_MNIST
