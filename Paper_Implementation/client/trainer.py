@@ -34,6 +34,13 @@ class ClientTrainer:
             x, y_true = self.trainLoaderIterator()
             y_pred = self.model(x) 
             loss_value = self.loss(y_pred, y_true)
+            if aggregator_method=='fedprox':
+                # Add proximal term to loss (FedProx)
+                w_diff = torch.tensor(0.)
+                for w, w_t in zip(self.model.parameters(), self.global_model.parameters()):
+                    w_diff += torch.pow(torch.norm(w.data - w_t.data), 2)
+                    w.grad.data += proximal_coff * (w_t.data - w.data)
+                loss_value += proximal_coff / 2. * w_diff
             loss = loss_value.item()
             self.loss_history.append(loss)
             self.optimizer.zero_grad()

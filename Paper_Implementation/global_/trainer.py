@@ -22,7 +22,7 @@ class GlobalTrainer:
         self.trainset = trainset
         self.client_trainer_set = {}
         self.fed_learn_method = fed_learn_method
-        agg_dict = {'fedavg': fedratedLearning.aggregate, 'fedavgM': fedratedLearning.aggregate_with_momentum}
+        agg_dict = {'fedavg': fedratedLearning.aggregate, 'fedavgM': fedratedLearning.aggregate_with_momentum, 'fedprox': fedratedLearning.aggregate}
         self.aggregator = agg_dict[self.fed_learn_method]
         # self.velocity = torch.zeros(1)
         for client_id in client_ids:
