@@ -2,13 +2,13 @@ dirichlet:
   alpha: 0.5  # alpha for dirichlet distribution
 
 client:
-  num_clients: 5  # number of clients
-  epochs: 5  # number of epochs
-  lr: 0.01  # learning rate
-  proximal_coff: 0.35
+  num_clients: 50  # number of clients
+  epochs: 2  # number of epochs
+  lr: 0.001  # learning rate
+  proximal_coff: 0.9
 
 global:
-  rounds: 5  # number of rounds
+  rounds: 30  # number of rounds
   random_select_ratio: 0.33 # ratio of random selection from the number of clients
 
 dataset:
@@ -16,9 +16,9 @@ dataset:
   name: 'mnist'  # 'mnist' or 'cifar10'
   path: 'dataset/'  # path to dataset
   num_classes: 10  # number of classes in dataset
-  batch_size: 32  # batch size
+  batch_size: 5  # batch size
 
 train:
   momentum: 0.9  # momentum for aggregation
-  aggregator_method: 'fedavgM' # 'fedavg' or 'fedavgM' or 'fedprox'
+  aggregator_method: 'fedprox' # 'fedavg' or 'fedavgM' or 'fedprox'
   model_name: 'cnn-mnist'  # 'mnist-mlp' or 'cnn-mnist'
