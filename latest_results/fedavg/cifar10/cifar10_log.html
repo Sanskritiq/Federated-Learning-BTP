@@ -1,0 +1,106 @@
+==================== FedAvg ====================                                                                                                              
+Experiment Arguments:                                                                                                                                         
+{                                                                                                                                                             
+    'model': 'lenet5',                                                                                                                                        
+    'dataset': 'cifar10',                                                                                                                                     
+    'seed': 42,                                                                                                                                               
+    'join_ratio': 0.1,                                                                                                                                        
+    'global_epoch': 100,                                                                                                                                      
+    'local_epoch': 5,                                                                                                                                         
+    'finetune_epoch': 0,                                                                                                                                      
+    'test_gap': 100,                                                                                                                                          
+    'eval_test': 1,                                                                                                                                           
+    'eval_val': 0,                                                                                                                                            
+    'eval_train': 0,                                                                                                                                          
+    'optimizer': 'sgd',                                                                                                                                       
+    'local_lr': 0.01,                                                                                                                                         
+    'momentum': 0.0,                                                                                                                                          
+    'weight_decay': 0.0,                                                                                                                                      
+    'verbose_gap': 10,                                                                                                                                        
+    'batch_size': 32,                                                                                                                                         
+    'visible': 0,                                                                                                                                             
+    'straggler_ratio': 0,                                                                                                                                     
+    'straggler_min_local_epoch': 1,                                                                                                                           
+    'external_model_params_file': '',                                                                                                                         
+    'use_cuda': 1,                                                                                                                                            
+    'save_log': 1,                                                                                                                                            
+    'save_model': 0,                                                                                                                                          
+    'save_fig': 1,                                                                                                                                            
+    'save_metrics': 1,                                                                                                                                        
+    'viz_win_name': None,                                                                                                                                     
+    'config_file': '',                                                                                                                                        
+    'check_convergence': 1,                                                                                                                                   
+    'dataset_args': {                                                                                                                                         
+        'dataset': 'cifar10',                                                                                                                                 
+        'client_num': 25,                                                                                                                                     
+        'test_ratio': 0.25,                                                                                                                                   
+        'val_ratio': 0.0,                                                                                                                                     
+        'seed': 42,                                                                                                                                           
+        'split': 'sample',                                                                                                                                    
+        'alpha': 0.1,                                                                                                                                         
+        'least_samples': 40                                                                                                                                   
+    }                                                                                                                                                         
+}                                                                                                                                                             
+-------------------------- TRAINING EPOCH: 10 --------------------------                                                                                      
+client [2] (test)  loss: 6.8841 -> 0.9696   accuracy: 6.73% -> 50.00%                                                                                         
+client [6] (test)  loss: 452.6200 -> 1.1097   accuracy: 1.15% -> 56.75%                                                                                       
+-------------------------- TRAINING EPOCH: 20 --------------------------                                                                                      
+client [22] (test)  loss: 4.0783 -> 0.3057   accuracy: 1.13% -> 95.11%                                                                                        
+client [13] (test)  loss: 3.7927 -> 0.3394   accuracy: 14.62% -> 90.53%                                                                                       
+-------------------------- TRAINING EPOCH: 30 --------------------------                                                                                      
+client [12] (test)  loss: 7.0222 -> 1.0359   accuracy: 1.84% -> 66.23%                                                                                        
+client [2] (test)  loss: 6.8864 -> 0.8472   accuracy: 0.96% -> 62.50%                                                                                         
+-------------------------- TRAINING EPOCH: 40 --------------------------                                                                                      
+client [8] (test)  loss: 3.2425 -> 0.7870   accuracy: 31.08% -> 73.62%                                                                                        
+client [14] (test)  loss: 4.0710 -> 0.3497   accuracy: 0.17% -> 88.39%                                                                                        
+-------------------------- TRAINING EPOCH: 50 --------------------------                                                                                      
+client [5] (test)  loss: 5.6570 -> 0.1950   accuracy: 5.33% -> 95.16%                                                                                         
+client [14] (test)  loss: 2.7677 -> 0.3654   accuracy: 26.04% -> 88.72%                                                                                       
+-------------------------- TRAINING EPOCH: 60 --------------------------                                                                                      
+client [22] (test)  loss: 4.6992 -> 0.2712   accuracy: 1.13% -> 94.74%                                                                                        
+client [10] (test)  loss: 7.8127 -> 1.3646   accuracy: 9.09% -> 62.12%                                                                                        
+-------------------------- TRAINING EPOCH: 70 --------------------------                                                                                      
+client [12] (test)  loss: 7.9012 -> 0.2975   accuracy: 16.16% -> 91.59%                                                                                       
+client [11] (test)  loss: 6.5328 -> 0.7983   accuracy: 7.75% -> 70.42%                                                                                        
+-------------------------- TRAINING EPOCH: 80 --------------------------                                                                                      
+client [14] (test)  loss: 4.6941 -> 0.3442   accuracy: 15.26% -> 87.73%                                                                                       
+client [16] (test)  loss: 1.1079 -> 0.1846   accuracy: 63.21% -> 92.84%                                                                                       
+-------------------------- TRAINING EPOCH: 90 --------------------------                                                                                      
+client [0] (test)  loss: 2.9459 -> 0.8267   accuracy: 33.66% -> 72.28%                                                                                        
+client [23] (test)  loss: 4.5854 -> 0.3087   accuracy: 3.39% -> 91.95%                                                                                        
+-------------------------- TRAINING EPOCH: 100 --------------------------                                                                                     
+client [24] (test)  loss: 4.5398 -> 0.0591   accuracy: 5.96% -> 98.78%                                                                                        
+client [16] (test)  loss: 4.6300 -> 0.1714   accuracy: 11.73% -> 93.70%                                                                                       
+FedAvg's average time taken by each global epoch: 0 m 6.86 s.                                                                                                 
+FedAvg's total running time: 0 h 11 m 29 s.                                                                                                                   
+==================== FedAvg Experiment Results: ====================                                                                                          
+Format: (before local fine-tuning) -> (after local fine-tuning)                                                                                               
+{                                                                                                                                                             
+    100: {                                                                                                                                                    
+        'all_clients': {                                                                                                                                      
+            'train': {'loss': '0.0000 -> 0.0000', 'accuracy': '0.00% -> 0.00%'},                                                                              
+            'val': {'loss': '0.0000 -> 0.0000', 'accuracy': '0.00% -> 0.00%'},                                                                                
+            'test': {'loss': '4.6137 -> 0.0000', 'accuracy': '19.57% -> 0.00%'}                                                                               
+        }                                                                                                                                                     
+    }                                                                                                                                                         
+}                                                                                                                                                             
+========== FedAvg Convergence on train clients ==========                                                                                                     
+train (before local training):                                                                                                                                
+val (before local training):                                                                                                                                  
+test (before local training):                                                                                                                                 
+10.0%(10.74%) at epoch: 1                                                                                                                                     
+50.0%(52.71%) at epoch: 3                                                                                                                                     
+60.0%(62.73%) at epoch: 16                                                                                                                                    
+90.0%(91.25%) at epoch: 30                                                                                                                                    
+train (after local training):                                                                                                                                 
+val (after local training):                                                                                                                                   
+test (after local training):                                                                                                                                  
+90.0%(92.28%) at epoch: 0                                                                                                                                     
+==================== FedAvg Max Accuracy ====================                                                                                                 
+all_clients:                                                                                                                                                  
+(train) before fine-tuning: 0.00% at epoch 100                                                                                                                
+(val) before fine-tuning: 0.00% at epoch 100                                                                                                                  
+(test) before fine-tuning: 19.57% at epoch 100                                                                                                                
+(train) after fine-tuning: 0.00% at epoch 100                                                                                                                 
+(val) after fine-tuning: 0.00% at epoch 100                                                                                                                   
+(test) after fine-tuning: 0.00% at epoch 100                                                                                                                  

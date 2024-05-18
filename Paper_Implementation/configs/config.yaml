@@ -3,13 +3,13 @@ dirichlet:
 
 client:
   num_clients: 50  # number of clients
-  epochs: 2  # number of epochs
+  epochs: 1  # number of epochs
   lr: 0.001  # learning rate
   proximal_coff: 0.9
 
 global:
-  rounds: 30  # number of rounds
-  random_select_ratio: 0.33 # ratio of random selection from the number of clients
+  rounds: 500  # number of rounds
+  random_select_ratio: 0.4 # ratio of random selection from the number of clients
 
 dataset:
   distribution: 'dirichlet'  # 'iid' or 'dirichlet'
